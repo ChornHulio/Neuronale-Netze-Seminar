@@ -1,0 +1,4 @@
+*.aux
+artikel.pdf
+*.log
+*.tex~
