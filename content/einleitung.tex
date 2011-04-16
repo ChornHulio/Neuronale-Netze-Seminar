@@ -1,13 +1,19 @@
 \section{Einleitung}
+Im einleitenden Abschnitt wird der Begriff \emph{Neuronales Netz} genauer betrachtet. Zu die\-ser Betrachtung, zählen sowohl Herkunft und Geschichte von künstlich neuronalen Netzen, als auch Einsatzgebiete in der Informatik und das Gebiet der Fehler\-rück\-führ\-ung.
 
 \subsection{Neuronale Netze}
-woher kommen Neuronale Netze (Hirn, Biologie)
+Computer sind extrem schnell im Errechnen von festen Algorithmen und überbieten dabei das menschliche Gehirn. Jedoch gibt es nach heutigem Wissensstand zwei Punkte, die die Überlegenheit des Menschen, ge\-gen\-über Rechnern sichern:
+\begin{description}
+  \item[Parallelität] Im menschlichen Gehirn gibt es ungefähr \(10^{11}\) Neuronen, die massiv parallel arbeiten. So kommt es tro\-tz geringerer Schaltgeschwindigkeit ge\-gen\-über Transistoren in einer CPU, zu einer enormen Leistungsfähigkeit. \cite{bib:dkriesel} 
+  \item[Lernfähigkeit] Der wichtigere Punkt allerdings ist die Lernfähigkeit des mensch\-li\-chen Gehirns. Es passt sich der Umgebung an. So verändern sich die vorhanden Neuronen und ihre Verbindungen, es kommen neue Neuronen dazu und es sterben alte Neuronen ab. Dies stellt eine Flexibilität dar, die ein Computer nicht erreicht.
+\end{description}
+Ziel von Künstlicher Intelligenz ist es, dem Computer eine gewisse Lernfähigkeit an\-zu\-eig\-nen. Ein Mittel hierzu sind Neuronale Netze.
 
 \subsection{Geschichte}
-siehe Wiki
+Das erste neuronale Netz wurde von Warren McCulloch und Walter Pitts im Jahr 1943 beschrieben. Bis in die sechziger Jahre war man der Meinung, man könne menschliche Gehirne durch neuronale Netze wei\-test\-ge\-hend nachbilden und so bestand auch ein starkes Forsch\-ungs\-in\-ter\-es\-se daran. Dies fand jedoch ein jähes Ende, als 1969 Marvin Minsky und Seymour Papert bewiesen, dass manche Pro\-ble\-me mit einer solchen Nachbildung nicht gelöst werden konnten. Der Beweis führte zu einem fast kompletten Rückgang der For\-schungs\-gel\-der und so zu einer verlangsamten For\-schung auf dem Gebiet der künstlichen Intelligenz. Erst 1986 konnte der Beweis von Minsky und Papert widerlegt werden. Ab dieser Zeit konnten etliche Errungenschaften in dem For\-schungs\-ge\-biet verzeichnet werden und neuronale Netze sind inzwischen ein wichtiger Bestandteil der heutigen Informatik. \cite{bib:dkriesel}
+
+\subsection{Einsatzgebiete}
+Neuronale Netze finden heute in einer Viel\-zahl von elektronischen Geräten An\-wen\-dung. So baut die Spracherkennung in Autos, die Schrifterkennung in modernen Smart\-phones und Tablets, und die Gesichtserkennung in Digitalkameras auf neuronale Netze auf. Im Gebiet der Robotik und bei Computerspielen, wird die Lernfähigkeit von neuronalen Netzen genutzt. Und auch bei der Analyse, Optimierung und Prognose von komplexen Prozessen, wie z.B. Aktienkurse, Wetter und Frühwarnsysteme für Naturkatastrophen, werden neuronale Netze angewandt.
 
 \subsection{Backpropagation}
-Erklärung Fehlerrückführung - kein HowTo!
-
-\subsection{Einsatzgebiete in der Informatik}
-KI, OCR, ...
+Bei der \emph{Backward Propagation}, kurz \emph{Backpropagation} handelt es sich um die Fehlerrückführung in neuronalen Netzen. Dies ist eine Art ein solches Netz zu trainieren und zu optimieren. Hierbei handelt es sich um \emph{überwachtes Lernen}. Es gibt einige Alternativen zu Backpropagation und überwachtes Lernen, die jedoch in dieser Arbeit nicht behandelt werden sollen.
