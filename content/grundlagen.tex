@@ -61,14 +61,60 @@ Ziel: Fehler soll minimiert werden
 
 Minimierung des Fehlers mittels Gradientenabstiegsverfahren:
 \\Lernrate $\eta$
+Ableitung des Fehlers nach dem Gewicht
 \begin{equation}
 \Delta w_{pq}=-\eta \frac{\delta E}{\delta w_{pq}}
 \end{equation}
+
+Für die Output-Schicht:
+\\Erweiterung Der Formel:
+\begin{equation}
+\frac{\delta E}{\delta w_{pq}} = \frac{\delta E}{\delta \sigma_{k}} \frac{\delta \sigma_{k}}{\delta w_{kj}}
+\end{equation}
+
+\begin{equation}
+\frac{\delta E}{\delta \sigma_{k}} = \frac{\delta E}{\delta o_{k}} \frac{\delta o_k}{\delta \sigma_k} = -(t_k - o_k) f'(\sigma_k)
+\end{equation}
+
+\begin{equation}
+\frac{\delta\sigma_k}{\delta w_{kj}}=y_i
+\end{equation}
+
+\begin{equation}
+\Delta w_{kj} = \eta (t_k - o_k) f'(\sigma_k)y_j
+\end{equation}
+
+\begin{equation}
+\mbox{mit }\delta_k = (t_k - o_k) f'(\sigma_k)
+\end{equation}
+
+\begin{equation}
+\Delta w_{kj} = \eta\cdot \delta_k \cdot y_i
+\end{equation}
+
+Für die Hidden Layer:
+\begin{equation}
+\frac{\delta E}{\delta w_{ji}} = \frac{\delta E}{\delta y_i} \frac{\delta y_i}{\delta\sigma_j}\frac{\delta\sigma_j}{\delta w_{ji}}
+\end{equation}
+\begin{equation}
+\Delta w_{ji} = \eta \cdot (\sum_{k=1}^{c}(t_k-o_k)\cdot f'(\sigma_k)\cdot w_kj) \cdot f'(\sigma_j) \cdot x_i
+\end{equation}
+
+\begin{equation}
+\mbox{mit } \delta_k = (t_k-o_k)\cdot f'(\sigma_k)\cdot w_kj) \cdot f'(\sigma_j)
+\end{equation}
+
+\begin{equation}
+\Delta w_{ji}=\eta \cdot \left(\sum_{k=1}^{c} \delta_k w_{kj}\right)\cdot f'(\sigma_j)\cdot x_i
+\end{equation}
+
 
 Neues Gewicht:
 \begin{equation}
 w_{pq, neu}=w_{pq, alt}+\Delta w_{pq}
 \end{equation}
+
+
 
 
 \subsection{Ausführung}
