@@ -3,8 +3,73 @@
 \subsection{Aufbau}
 Wie ist ein Neuronales Netzwerk augebaut (speziell ein Backprop Network)
 
+Eingangserregungsfunktion $\sigma$ eines j-ten Neurons mit n Eingängen:
+
+Skalarprodukt:
+\begin{equation}
+  \sigma_{j} = \sum_{i=1}^{n} w_{ji} x_{i}+w_{j0}
+\end{equation} 
+
+euklidische Distanz:
+\begin{equation}
+  \sigma_{j} = \sum_{i=1}^{n} (w_{ji} - x_{i})^2+w_{j0}^2
+\end{equation} 
+
+Aktivierungsfunktionen eines Neurons:
+
+Stufenfunktion:
+\begin{equation}
+f(\sigma) = 1 \mbox{ if } \sigma < 0;  \mbox{ else } 0
+\end{equation}
+
+Sigmoidfunktion:
+\begin{equation}
+f(\sigma) = \frac{1}{1+e^{-\sigma}}
+\end{equation}
+
+Glockenkurve:
+\begin{equation}
+f(\sigma) = e^{-\sigma^2}
+\end{equation}
+
+ist im Prinzip eine Schwellwertentscheidung
+
+Feedforward Berechnung:
+\begin{equation}
+o_{k}(\vec{x})=f\left( \sum_{j=1}^{n_{hidden}} w_{kj} f\left(\sum_{i=1}^{n} w_{ji}x_{i}+w_{j0} \right)+w_{k0} \right)
+\end{equation}
+
 \subsection{Training}
-mit mathematische Formeln
+
+2 Arten von Training:
+ \\- überwachtes Lernen
+ \\- unüberwachtes Lernen
+ 
+ Einziger Parameter, an dem man hier drehen kann, sind die Gewichte. Manchmal gibt es noch einen weiteren Wert, den das Neuron selbstständig hinzumultipliziert. Dieser kann ebenfalls angepasst werden.
+ 
+ Daten werden in zwei Teile unterteilt:
+ \\-Trainingdaten
+ \\-Verifikationsdaten
+ 
+ 
+ Bestimmung des Ausgabefehlers:
+\begin{equation}
+E = \frac{1}{2} \sum_{k=1}^{c}(t_{k}+o_{k})^2
+\end{equation}
+
+Ziel: Fehler soll minimiert werden
+
+Minimierung des Fehlers mittels Gradientenabstiegsverfahren:
+\\Lernrate $\eta$
+\begin{equation}
+\Delta w_{pq}=-\eta \frac{\delta E}{\delta w_{pq}}
+\end{equation}
+
+Neues Gewicht:
+\begin{equation}
+w_{pq, neu}=w_{pq, alt}+\Delta w_{pq}
+\end{equation}
+
 
 \subsection{Ausführung}
 welche Schritte aus dem Training werden wiederholt
