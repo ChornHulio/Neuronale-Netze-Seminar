@@ -1,7 +1,7 @@
-\section{Grundlagen}
+%\section{Grundlagen}
 
-\subsection{Aufbau}
-Ein Neuronales Netz besteht aus mehreren Neuronen, die miteinander verbunden sind. Ein Neuron kann wie in Abbildung \ref{neuron} modelliert werden. Demzufolge besteht ein Neuron aus einer Menge an Inputs und einem Output. Die gewichteten Inputs werden kumuliert und in eine Aktivierungsfunktion eingesetzt. Dieses Ergebnis geht dann als Output an weitere Neuronen. 
+\section{Aufbau}
+Ein neuronales Netz besteht aus mehreren Neuronen, die miteinander verbunden sind. Ein Neuron kann wie in Abbildung \ref{neuron} modelliert werden. Demzufolge besteht ein Neuron aus einer Menge an Inputs und einem Output. Die gewichteten Inputs werden kumuliert und in eine Aktivierungsfunktion eingesetzt. Dieses Ergebnis geht dann als Output an weitere Neuronen. 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.4\textwidth]{pictures/neuron.jpg}
@@ -17,10 +17,14 @@ Durch das Verbinden der einzelnen Neuronen ergibt sich ein Netz. Dieses wird in 
 \label{network}
 \end{figure}
 
-Das dargestellte Modell besteht aus einem Input-Layer, der nur als Interface zwischen dem Netz und seiner Umgebung dient, einem Hidden-Layer, sowie einem Output-Layer, das die Systemantwort des Netzes an die Umgebung ausgibt. Der Name "Hidden-Layer" bezieht sich darauf, dass diese Zwischenschicht von außen nicht einsehbar ist.
+Das dargestellte Modell besteht aus einem Input-Layer, der nur als Interface zwischen dem Netz und seiner Umgebung dient, einem Hidden-Layer, sowie einem Output-Layer, das die Systemantwort des Netzes an die Umgebung ausgibt. Der Name \emph{Hidden-Layer} bezieht sich darauf, dass diese Zwischenschicht von außen nicht einsehbar ist.
 
-Damit das Modell eines neuronalen Netzes arbeiten kann, ist es notwendig, die einzelnen Vorgänge mathematisch darzustellen. Diese mathematischen Eigenschaften eines neuronalen Netzes sollen im Folgenden beschrieben werden. Die verwendeten Formeln entstammen dem Skript der Vorlesung "Digitale Sprachverarbeitung" 2011 von Dr. Thomas Dörsam.
-\subsubsection{Eingangserregung}
+Damit das Modell eines neuronalen Netzes arbeiten kann, ist es notwendig, die einzelnen Vorgänge mathematisch darzustellen. Diese mathematischen Eigenschaften eines neuronalen Netzes sollen im Folgenden beschrieben werden. Die verwendeten Formeln entstammen dem Skript der Vorlesung \emph{Digitale Sprachverarbeitung} 2011 von Dr. Thomas Dörsam.
+
+\section{Eingang}
+Ein Neuron reagiert auf Eingänge, wenn sie bestimmte Bedingungen erfüllen. Der Wert, der von außen auf das Neuron wirkt, wird \emph{Eingangserregung} genannt. Die Bedingungen, die erfüllt sein müssen, werden \emph{Aktivierungsfunktion} genannt.
+
+\subsection{Eingangserregung}
 Damit ein Neuron des Netzes überhaupt reagieren kann, ist es notwendig, alle eingehenden Werte unter Berücksichtigung ihrer Gewichte miteinander zu kumulieren. Dies geschieht über eine Erregungsfunktion. Es gibt keine Vorschriften für eine solche Erregungsfunktion. Typisch sind jedoch das Skalarprodukt, oder die euklidische Distanz. Diese Erregungsfunktionen $\sigma$ für ein j-tes Neurons mit n Eingängen lauten:
 
 Skalarprodukt:
@@ -28,12 +32,12 @@ Skalarprodukt:
   \sigma_{j} = \sum_{i=1}^{n} w_{ji} x_{i}+w_{j0}
 \end{equation} 
 
-euklidische Distanz:
+Euklidische Distanz:
 \begin{equation}
   \sigma_{j} = \sum_{i=1}^{n} (w_{ji} - x_{i})^2+w_{j0}^2
 \end{equation} 
 
-\subsubsection{Aktivierungsfunktion}
+\subsection{Aktivierungsfunktion}
 Nachdem der kumulierte Erregungswert $\sigma$ mit Hilfe einer Erregungsfunktion berechnet wurde, muss ermittelt werden, wie stark dieser Wert das Neuron aktiviert. Hierfür stehen ebenfalls diverse Funktionen zu Auswahl.
 
 Eine klassische Schwellwertfunktion ist die Stufenfunktion. Wird ein bestimmter Wert überschritten, wird das Neuron aktiviert und beginnt zu feuern.
@@ -46,7 +50,7 @@ f(\sigma) = 1 \mbox{ if } \sigma < 0;  \mbox{ else } 0
 \caption{Stufenfunktion \cite{bib:stufe}}
 \end{figure}
 
-Da die Stufenfunktion das Verhalten eines Neurons sehr gut abbildet, allerdings nicht stetig und damit nicht vollständig differenzierbar ist, wurde sie durch die Sigmoidfunktion angenähert. Diese erhält den Schwellwertcharakter der Stufenfunktion, steigt aber flacher an und umgeht so die Unstetigkeit.
+Da die Stufenfunktion das Verhalten eines Neurons sehr gut abbildet, allerdings nicht stetig und damit nicht vollständig differenzierbar ist, wird sie durch die Sigmoidfunktion angenähert. Diese erhält den Schwellwertcharakter der Stufenfunktion, steigt aber flacher an und umgeht so die Unstetigkeit.
 \begin{equation}
 f(\sigma) = \frac{1}{1+e^{-\sigma}}
 \end{equation}
@@ -70,20 +74,16 @@ f(\sigma) = e^{-\sigma^2}
 \centering
 \includegraphics[width=0.4\textwidth]{pictures/glocke.png}
 \caption{Glockenfunktion}
-
 \end{figure}
 
-
-
-
-\subsection{Feedforward Berechnung}
+\section{Feedforward Berechnung}
 Nachdem nun die Eigenschaften eines einzelnen Neurons definiert wurden, ist es möglich den gesamten Output eines ganzen Netzes zu berechnen.  Es wird jeweils der Input der vorherigen Schicht kumuliert und das Ergebnis der Aktivierungsfunktion an die nachfolgende Schicht weitergegeben. Für die nachfolgende Formel wurde das Skalarprodukt, sowie ein Hidden-Layer zugrunde gelegt. Bei mehr Hidden-Layern müsste die Funktion diese ebenso als Summe verschachteln.
 \begin{equation}
 o_{k}(\vec{x})=f\left( \sum_{j=1}^{n_{hidden}} w_{kj} f\left(\sum_{i=1}^{n_{input}} w_{ji}x_{i}+w_{j0} \right)+w_{k0} \right)
 \end{equation}
 Um die vollständige Systemantwort zu erhalten, muss diese Funktion für jedes Neuron des Output-Layers berechnet werden.
 
-\subsection{Training}
+\section{Training}
 
 Damit ein neuronales Netz eine adäquate Systemantwort generieren kann, ist es notwendig das Netz zu trainieren. In der Natur geschieht dies, indem die einzelnen Verbindungen zwischen zwei Neuronen dicker werden, oder sogar neue entstehen. Zumindest das Wachstum der Verbindungen lässt sich im mathematischen Modell durch die Modifikation der Gewichte nachbilden. Wichtige Neuronen werden ungefiltert, oder sogar verstärkt in den Erregungswert einfließen, unwichtige, oder sogar störende Neuronen werden gedämpft.
 
@@ -96,7 +96,6 @@ E = \frac{1}{2} \sum_{k=1}^{c}(t_{k}-o_{k})^2
 
 Den Wert dieser Fehlerfunktion $E$ gilt es nun zu minimieren.
 
-\subsubsection{Das Gradientenabstiegsverfahren}
 Eine Möglichkeit zur Minimierung des Fehlers ist das Gradientenabstiegsverfahren. Hierbei wird die Fehlerfunktion nach dem Gewicht, dem einzig veränderbaren Parameter, abgeleitet, um die Richtung zum Minimum der Funktion zu ermitteln. Mit der Lernrate $\eta$ wird eine Schrittweite festgelegt, mit der sich in Richtung dieses Minimums bewegt wird.
 \begin{equation}
 \Delta w_{pq}=-\eta \frac{\delta E}{\delta w_{pq}}
@@ -171,9 +170,6 @@ w_{pq, neu}=w_{pq, alt}+\Delta w_{pq}
 Das Gradientenabstiegsverfahren ist sehr elegant und einfach zu implementieren. Allerdings gibt es auch einige Nachteile, die berücksichtigt werden müssen. Bei großen Fehlern wird das Gewicht sehr stark angepasst. Dadurch springt der neue Funktionswert sehr stark im Funktionsraum. Dies kann dazu führen, dass der Fehler eventuell sogar verstärkt wird. Sollte dies der Fall sein, besteht die Gefahr, dass das neuronale Netz divergiert, anstatt zu konvergieren. Der Fehler würde sich immer weiter aufschaukeln und das Ergebnis immer schlechter werden, was wiederum die Sprungweite des Gewichts vergrößert. Damit dies nicht passiert, kann die Lernrate $\eta$ bei jedem Lernschritt verkleinert werden. Dadurch wird das Neuron zum konvergieren gezwungen. Allerdings ist so nicht dass die Anpassung des Gewichts wirklich bei Erreichen eines Minimums aufhört. 
 Des Weiteren ist nicht sicher, ob das Minimum, auf das das Gewicht optimiert wird, wirklich ein globales Minimum ist. Da immer nur in Richtung der negativen Steigung gewandert wird, ist es sehr wahrscheinlich, nur ein lokales Minimum zu erreichen. Dagegen gibt es auch keine Maßnahme. Sollte das Netz also trotz Training keine ausreichend genaue Systemantwort generieren, wäre es eine Option, die Gewichte nochmals neu mit Zufallszahlen zu initialisieren, um dadurch möglicherweise in einem besseren Minimum des Fehlers zu finden.
 
-
-
-
-\subsection{Ausführung}
+\section{Ausführung}
 welche Schritte aus dem Training werden wiederholt
 (Ausführung ist ein unglücklicher Name)
