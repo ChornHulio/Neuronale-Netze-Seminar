@@ -4,7 +4,7 @@
 Ein neuronales Netz besteht aus mehreren Neuronen, die miteinander verbunden sind. Ein Neuron kann wie in Abbildung \ref{neuron} modelliert werden. Demzufolge besteht ein Neuron aus einer Menge an Inputs und einem Output. Die gewichteten Inputs werden kumuliert und in eine Aktivierungsfunktion eingesetzt. Dieses Ergebnis geht dann als Output an weitere Neuronen. 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.4\textwidth]{pictures/neuron.jpg}
+\includegraphics[width=0.6\textwidth]{pictures/neuron.jpg}
 \caption{Modell eines Neurons \cite{bib:neuron}}
 \label{neuron}
 \end{figure}
@@ -12,12 +12,12 @@ Ein neuronales Netz besteht aus mehreren Neuronen, die miteinander verbunden sin
 Durch das Verbinden der einzelnen Neuronen ergibt sich ein Netz. Dieses wird in Schichten unterteilt, damit es übersichtlicher und beherrschbarer wird. Abbildung \ref{network} zeigt ein solches Modell.
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.4\textwidth]{pictures/neural-network.png}
+\includegraphics[width=0.5\textwidth]{pictures/neural-network.png}
 \caption{Modell eines neuronalen Netzes \cite{bib:neuron}}
 \label{network}
 \end{figure}
 
-Das dargestellte Modell besteht aus einem Input-Layer, der nur als Interface zwischen dem Netz und seiner Umgebung dient, einem Hidden-Layer, sowie einem Output-Layer, das die Systemantwort des Netzes an die Umgebung ausgibt. Der Name \emph{Hidden-Layer} bezieht sich darauf, dass diese Zwischenschicht von außen nicht einsehbar ist.
+Das dargestellte Modell besteht aus einem Input-Layer, der nur als Interface zwischen dem Netz und seiner Umgebung dient, einem Middel Layer, auch Hidden-Layer genannt, sowie einem Output-Layer, das die Systemantwort des Netzes an die Umgebung ausgibt. Der Name \emph{Hidden-Layer} bezieht sich darauf, dass diese Zwischenschicht von außen nicht einsehbar ist.
 
 Damit das Modell eines neuronalen Netzes arbeiten kann, ist es notwendig, die einzelnen Vorgänge mathematisch darzustellen. Diese mathematischen Eigenschaften eines neuronalen Netzes sollen im Folgenden beschrieben werden. Die verwendeten Formeln entstammen dem Skript der Vorlesung \emph{Digitale Sprachverarbeitung} 2011 von Dr. Thomas Dörsam.
 
@@ -40,24 +40,26 @@ Euklidische Distanz:
 \subsection{Aktivierungsfunktion}
 Nachdem der kumulierte Erregungswert $\sigma$ mit Hilfe einer Erregungsfunktion berechnet wurde, muss ermittelt werden, wie stark dieser Wert das Neuron aktiviert. Hierfür stehen ebenfalls diverse Funktionen zu Auswahl.
 
-Eine klassische Schwellwertfunktion ist die Stufenfunktion. Wird ein bestimmter Wert überschritten, wird das Neuron aktiviert und beginnt zu feuern.
+Eine klassische Schwellwertfunktion ist die Stufenfunktion. Wird ein bestimmter Wert überschritten, wird das Neuron aktiviert und beginnt zu feuern (Abbildung \ref{stufe}).
 \begin{equation}
 f(\sigma) = 1 \mbox{ if } \sigma < 0;  \mbox{ else } 0
 \end{equation}
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.4\textwidth]{pictures/stufenfunktion.png}
+\includegraphics[width=0.6\textwidth]{pictures/stufenfunktion.png}
 \caption{Stufenfunktion \cite{bib:stufe}}
+\label{stufe}
 \end{figure}
 
-Da die Stufenfunktion das Verhalten eines Neurons sehr gut abbildet, allerdings nicht stetig und damit nicht vollständig differenzierbar ist, wird sie durch die Sigmoidfunktion angenähert. Diese erhält den Schwellwertcharakter der Stufenfunktion, steigt aber flacher an und umgeht so die Unstetigkeit.
+Da die Stufenfunktion das Verhalten eines Neurons sehr gut abbildet, allerdings nicht stetig und damit nicht vollständig differenzierbar ist, wird sie durch die Sigmoidfunktion (Abbildung \ref{sigmoid}) angenähert. Diese erhält den Schwellwertcharakter der Stufenfunktion, steigt aber flacher an und umgeht so die Unstetigkeit.
 \begin{equation}
 f(\sigma) = \frac{1}{1+e^{-\sigma}}
 \end{equation}
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.4\textwidth]{pictures/sigmoid.png}
+\includegraphics[width=0.6\textwidth]{pictures/sigmoid.png}
 \caption{Sigmoidfunktion}
+\label{sigmoid}
 
 \end{figure}
 
@@ -66,26 +68,28 @@ Ein weiterer Vorteil der Sigmoidfunktion ist die sehr einfache Ableitung, die ei
 f'(\sigma) = f(\sigma)\cdot (1- f(\sigma))
 \end{equation}
 
-Soll das Neuron nur innerhalb eines bestimmten Bereichs aktiviert werden, eignet sich eine Glockenfunktion. Sie approximiert eine Fensterfunktion, ist aber ebenfalls stetig.
+Soll das Neuron nur innerhalb eines bestimmten Bereichs aktiviert werden, eignet sich eine Glockenfunktion (Abbildung  \ref{glocke}). Sie approximiert eine Fensterfunktion, ist aber ebenfalls stetig.
 \begin{equation}
 f(\sigma) = e^{-\sigma^2}
 \end{equation}
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.4\textwidth]{pictures/glocke.png}
+\includegraphics[width=0.6\textwidth]{pictures/glocke.png}
 \caption{Glockenfunktion}
+\label{glocke}
 \end{figure}
 
 \section{Feedforward Berechnung}
 Nachdem nun die Eigenschaften eines einzelnen Neurons definiert wurden, ist es möglich den gesamten Output eines ganzen Netzes zu berechnen.  Es wird jeweils der Input der vorherigen Schicht kumuliert und das Ergebnis der Aktivierungsfunktion an die nachfolgende Schicht weitergegeben. Für die nachfolgende Formel wurde das Skalarprodukt, sowie ein Hidden-Layer zugrunde gelegt. Bei mehr Hidden-Layern müsste die Funktion diese ebenso als Summe verschachteln.
 \begin{equation}
 o_{k}(\vec{x})=f\left( \sum_{j=1}^{n_{hidden}} w_{kj} f\left(\sum_{i=1}^{n_{input}} w_{ji}x_{i}+w_{j0} \right)+w_{k0} \right)
+\label{eq:o}
 \end{equation}
 Um die vollständige Systemantwort zu erhalten, muss diese Funktion für jedes Neuron des Output-Layers berechnet werden.
 
 \section{Training}
 
-Damit ein neuronales Netz eine adäquate Systemantwort generieren kann, ist es notwendig das Netz zu trainieren. In der Natur geschieht dies, indem die einzelnen Verbindungen zwischen zwei Neuronen dicker werden, oder sogar neue entstehen. Zumindest das Wachstum der Verbindungen lässt sich im mathematischen Modell durch die Modifikation der Gewichte nachbilden. Wichtige Neuronen werden ungefiltert, oder sogar verstärkt in den Erregungswert einfließen, unwichtige, oder sogar störende Neuronen werden gedämpft.
+Damit ein neuronales Netz eine adäquate Systemantwort generieren kann, ist es not\-wen\-dig das Netz zu trainieren. In der Natur geschieht dies, indem die einzelnen Verbindungen zwischen zwei Neuronen dicker werden, oder sogar neue entstehen. Zumindest das Wachstum der Verbindungen lässt sich im mathematischen Modell durch die Modifikation der Gewichte nachbilden. Wichtige Neuronen werden ungefiltert, oder sogar verstärkt in den Erregungswert einfließen, unwichtige, oder sogar störende Neuronen werden gedämpft.
 
 Um das neuronale Netz zu trainieren muss ein Teil der zu analysierenden Daten manuell bearbeitet werden. Die eine Hälfte dieses Datensatzes wird zum Training des Netzes eingesetzt, der Andere zur Verifikation der Arbeitsweise.
  
@@ -111,13 +115,13 @@ Die Fehlerfunktion $E$ wird durch Anwendung der Kettenregel erweitert. So wird $
 \label{eqn:output-erw}
 \end{equation}
 
-Diese Erweiterung ermöglicht es, die einzelnen Faktoren separat zu betrachten. Die Fehlerfunktion $E$ wird nun wieder mittels Kettenregel erweitert. So wird diese erst nach dem Faktor $o$ (Ergebnis der Funktion $o()$) abgeleitet und die Funktion $o()$ nach $\sigma$.
+Diese Erweiterung ermöglicht es, die einzelnen Faktoren separat zu betrachten. Die Fehlerfunktion $E$ wird nun wieder mittels Kettenregel erweitert. So wird diese erst nach dem Faktor $o_k(\vec{x})$ (Formel \ref{eq:o}) abgeleitet und die Funktion $o_k(\vec{x})$ nach $\sigma$.
 \begin{equation}
 \frac{\delta E}{\delta \sigma_{k}} = \frac{\delta E}{\delta o_{k}} \frac{\delta o_k}{\delta \sigma_k} = -(t_k - o_k) f'(\sigma_k)
 \end{equation}
 Wie man sieht, wird die Ableitung dadurch enorm erleichtert. Der erste Teil ist die Differenz zwischen Ist- und Sollwert, der zweite Teil die Ableitung der Aktivierungsfunktion. Ist diese die Sigmoidfunktion, so lautet die Ableitung $f'(\sigma)=f(\sigma)\cdot (1-f(\sigma))$.
 
-Der zweite Teil der Ableitung \ref{eqn:output-erw} ist noch einfacher. Er ist der Output des Neurons aus dem Hidden-Layer, der ja bereits bei der Berechnung des allgemeinen Outputs berechnet wurde
+Der zweite Teil der Ableitung von Formel (\ref{eqn:output-erw})  ist der Output des Neurons aus dem Hidden-Layer, der ja bereits bei der Berechnung des allgemeinen Outputs berechnet wurde
 \begin{equation}
 \frac{\delta\sigma_k}{\delta w_{kj}}=y_j
 \end{equation}
@@ -167,9 +171,8 @@ w_{pq, neu}=w_{pq, alt}+\Delta w_{pq}
 
 \emph{Probleme:}
 
-Das Gradientenabstiegsverfahren ist sehr elegant und einfach zu implementieren. Allerdings gibt es auch einige Nachteile, die berücksichtigt werden müssen. Bei großen Fehlern wird das Gewicht sehr stark angepasst. Dadurch springt der neue Funktionswert sehr stark im Funktionsraum. Dies kann dazu führen, dass der Fehler eventuell sogar verstärkt wird. Sollte dies der Fall sein, besteht die Gefahr, dass das neuronale Netz divergiert, anstatt zu konvergieren. Der Fehler würde sich immer weiter aufschaukeln und das Ergebnis immer schlechter werden, was wiederum die Sprungweite des Gewichts vergrößert. Damit dies nicht passiert, kann die Lernrate $\eta$ bei jedem Lernschritt verkleinert werden. Dadurch wird das Neuron zum konvergieren gezwungen. Allerdings ist so nicht dass die Anpassung des Gewichts wirklich bei Erreichen eines Minimums aufhört. 
+Das Gradientenabstiegsverfahren ist sehr elegant und einfach zu implementieren. Allerdings gibt es auch einige Nachteile, die berücksichtigt werden müssen. Bei großen Fehlern wird das Gewicht sehr stark angepasst. Dadurch springt der neue Funktionswert sehr stark im Funktionsraum. Dies kann dazu führen, dass der Fehler eventuell sogar verstärkt wird. Sollte dies der Fall sein, besteht die Gefahr, dass das neuronale Netz divergiert, anstatt zu konvergieren. Der Fehler würde sich immer weiter aufschaukeln und das Ergebnis immer schlechter werden, was wiederum die Sprungweite des Gewichts vergrößert. Damit dies nicht passiert, kann die Lernrate $\eta$ bei jedem Lernschritt verkleinert werden. Dadurch wird das Neuron zum konvergieren gezwungen. Allerdings ist so nicht gewährleistet, dass die Anpassung des Gewichts wirklich bei Erreichen eines Minimums aufhört.
 Des Weiteren ist nicht sicher, ob das Minimum, auf das das Gewicht optimiert wird, wirklich ein globales Minimum ist. Da immer nur in Richtung der negativen Steigung gewandert wird, ist es sehr wahrscheinlich, nur ein lokales Minimum zu erreichen. Dagegen gibt es auch keine Maßnahme. Sollte das Netz also trotz Training keine ausreichend genaue Systemantwort generieren, wäre es eine Option, die Gewichte nochmals neu mit Zufallszahlen zu initialisieren, um dadurch möglicherweise in einem besseren Minimum des Fehlers zu finden.
 
 \section{Ausführung}
-welche Schritte aus dem Training werden wiederholt
-(Ausführung ist ein unglücklicher Name)
+Sobald das Training abgeschlossen ist, kann das neuronale Netz eingesetzt werden. Dazu wird aus dem Backpropagation Netz wieder ein einfaches Feedforward Netz. Der Input des Netzes wird über die nun statische Gewichtung der Verbindungen berechnet und ausgegeben. Je nach Güte des Trainings wird das Netz nun adäquate Antworten auch auf neue Inputparameter geben.
